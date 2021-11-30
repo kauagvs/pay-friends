@@ -1,0 +1,100 @@
+<div class="profile-page-container" fxLayout="column" fxLayoutAlign="center">
+  <header class="profile-cover">
+    <button class="edit-button" mat-button mat-icon-button>
+      <mat-icon> edit </mat-icon>
+    </button>
+  </header>
+  <div
+    class="profile-content"
+    fxLayout="column"
+    fxLayout.gt-md
+    fxLayoutAlign="center"
+    fxLayoutGap="16px"
+    fxLayoutGap.gt-md="64px"
+  >
+    <aside fxFlex fxFlex.gt-md="0 1 25%" fxLayout="column">
+      <mat-card
+        class="profile-card"
+        fxFlex="0 1 300px"
+        fxFlex.gt-md="0 1 400px"
+        fxLayout="column"
+        fxLayoutAlign="center"
+        fxLayoutGap="16px"
+      >
+        <button class="edit-button" mat-button mat-icon-button>
+          <mat-icon> edit </mat-icon>
+        </button>
+        <mat-card-header fxFlex="0 1 40%" fxLayout fxLayoutAlign="center center">
+          <div class="profile-image" fxLayout fxLayoutAlign="center center">
+            <img src="assets/img/user.png" alt="User photo" />
+          </div>
+        </mat-card-header>
+        <mat-card-content fxLayout fxLayoutAlign="center center">
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <p class="user-name">{{ user.name }}</p>
+            <p class="user-email">{{ user.email }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </aside>
+
+    <main fxFlex fxFlex.gt-md="0 1 40%" fxLayout="column" fxLayoutGap="16px">
+      <div fxFlex fxLayout="column">
+        <mat-card
+          class="about-container"
+          fxFlex="0 1 400px"
+          fxFlex.gt-sm="0 1 300px"
+          fxLayout="column"
+          fxLayoutGap="16px"
+        >
+          <mat-card-header>
+            <mat-card-title>Sobre mim</mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxFlex>
+            <p>
+              Lorem ipsum dolor sit amet, eu ullamco consectetur tempor id velit ullamco do est
+              labore Lorem ipsum dolor sit amet, eu ullamco consectetur tempor id velit ullamco do
+              est labore
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet, eu ullamco consectetur tempor id velit ullamco do est
+              labore
+            </p>
+          </mat-card-content>
+          <mat-card-actions fxFlexAlign="start end">
+            <button mat-button>EDITAR</button>
+            <button mat-button>COMPARTILHAR</button>
+          </mat-card-actions>
+        </mat-card>
+      </div>
+
+      <div fxFlex fxLayout="column">
+        <mat-card
+          class="friends-container"
+          fxFlex="0 1 400px"
+          fxFlex.gt-sm="0 1 250px"
+          fxLayout="column"
+          fxLayoutGap="16px"
+        >
+          <mat-card-header>
+            <mat-card-title>Amigos <span class="pointer">(7)</span></mat-card-title>
+          </mat-card-header>
+          <mat-card-content fxFlex fxLayout="row wrap" fxLayoutAlign="center center">
+            <div
+              fxFlex
+              fxLayout="column"
+              fxLayoutAlign="center center"
+              fxLayoutGap="16px"
+              *ngFor="let friend of friends"
+            >
+              <div class="friend-image" fxLayout="column" fxLayoutAlign="center center">
+                <app-image-loader [src]="friend.image" [width]="80"></app-image-loader>
+              </div>
+              <span>{{ friend.name }}</span>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </main>
+  </div>
+</div>

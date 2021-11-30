@@ -1,0 +1,57 @@
+<mat-dialog-content>
+  <h2>{{ data?.message ?? message }}</h2>
+
+  <form [formGroup]="paymentForm">
+    <div fxLayout="column" fxLayout.gt-sm fxLayoutGap="0" fxLayoutGap.gt-sm="16px">
+      <mat-form-field fxFlex fxFlex.gt-sm="0 1 50%">
+        <mat-label>Usuário</mat-label>
+        <input matInput placeholder="usuario" formControlName="user" required />
+        <mat-error *ngIf="displayMessage.user">
+          <p [innerHtml]="displayMessage.user"></p>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex fxFlex.gt-sm="0 1 50%">
+        <mat-label>Valor</mat-label>
+        <input matInput currencyMask placeholder="700" formControlName="value" required />
+        <mat-error *ngIf="displayMessage.value">
+          <p [innerHtml]="displayMessage.value"></p>
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="column" fxLayout.gt-sm fxLayoutGap="16px">
+      <mat-form-field fxFlex fxFlex.gt-sm="0 1 50%">
+        <mat-label>Data</mat-label>
+        <input
+          matInput
+          [matDatepicker]="dp3"
+          placeholder="09/11/2021"
+          formControlName="date"
+          required
+        />
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 [disabled]="false"></mat-datepicker>
+        <mat-error *ngIf="displayMessage.date">
+          <p [innerHtml]="displayMessage.date"></p>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field fxFlex fxFlex.gt-sm="0 1 50%">
+        <mat-label>Título</mat-label>
+        <input matInput placeholder="título" formControlName="title" />
+      </mat-form-field>
+    </div>
+
+    <mat-checkbox class="mb-8" color="primary" formControlName="isPaid">Pago</mat-checkbox>
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions fxLayout>
+  <div class="pb-8" fxFlex fxLayout fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button mat-flat-button mat-dialog-close>{{ data?.actions?.no ?? actions?.no }}</button>
+    <button mat-flat-button color="primary" [disabled]="!paymentForm.valid" (click)="confirm()">
+      {{ data?.actions?.yes ?? actions?.yes }}
+    </button>
+  </div>
+</mat-dialog-actions>

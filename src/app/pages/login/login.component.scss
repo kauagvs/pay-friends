@@ -1,0 +1,10 @@
+@import 'src/scss/abstracts/colors';
+
+section {
+  background: $main-background;
+
+  h1 {
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+}

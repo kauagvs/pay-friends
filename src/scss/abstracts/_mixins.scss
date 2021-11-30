@@ -1,0 +1,83 @@
+@mixin generate-font-sizes {
+  $max: 30;
+  $offset: 2;
+  $unit: 'pt';
+  $i: 6;
+
+  @while $i <= $max {
+    .font-size-#{$i} {
+      font-size: #{$i + $unit};
+    }
+    $i: $i + $offset;
+  }
+}
+
+@mixin generate-paddings-and-margins {
+  $max: 100;
+  $offset: 1;
+  $unit: 'px';
+  $i: 0;
+
+  @while $i <= $max {
+    .m-#{$i} {
+      margin: #{$i + $unit};
+    }
+
+    .mt-#{$i} {
+      margin-top: #{$i + $unit};
+    }
+
+    .mr-#{$i} {
+      margin-right: #{$i + $unit};
+    }
+
+    .mb-#{$i} {
+      margin-bottom: #{$i + $unit};
+    }
+
+    .ml-#{$i} {
+      margin-left: #{$i + $unit};
+    }
+
+    .mx-#{$i} {
+      margin: 0 #{$i + $unit};
+    }
+
+    .my-#{$i} {
+      margin: #{$i + $unit} 0;
+    }
+
+    .p-#{$i} {
+      padding: #{$i + $unit};
+    }
+
+    .pt-#{$i} {
+      padding-top: #{$i + $unit};
+    }
+
+    .pr-#{$i} {
+      padding-right: #{$i + $unit};
+    }
+
+    .pb-#{$i} {
+      padding-bottom: #{$i + $unit};
+    }
+
+    .pl-#{$i} {
+      padding-left: #{$i + $unit};
+    }
+
+    .px-#{$i} {
+      padding: 0 #{$i + $unit};
+    }
+
+    .py-#{$i} {
+      padding: #{$i + $unit} 0;
+    }
+
+    $i: $i + $offset;
+  }
+}
+
+@include generate-font-sizes();
+@include generate-paddings-and-margins();

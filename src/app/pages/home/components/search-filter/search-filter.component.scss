@@ -1,0 +1,40 @@
+:host {
+  width: 100%;
+}
+
+header {
+  button {
+    margin-bottom: 16px;
+  }
+}
+
+::ng-deep .mat-menu-panel {
+  &.filter-menu {
+    width: 100%;
+    margin-left: 40px;
+    margin-top: 5px;
+
+    ::ng-deep .mat-form-field-wrapper {
+      margin-bottom: -0.7em;
+    }
+
+    &.mat-menu-panel {
+      max-width: 100%;
+
+      .mat-menu-content:not(:empty) {
+        padding-top: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .filter-menu-backdrop {
+    + .cdk-overlay-connected-position-bounding-box {
+      .cdk-overlay-pane {
+        width: inherit;
+      }
+    }
+  }
+}

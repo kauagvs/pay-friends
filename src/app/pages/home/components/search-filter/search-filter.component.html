@@ -1,0 +1,99 @@
+<mat-form-field fxFlex fxFlex.gt-sm="0 1 40%" fxFlex.gt-md="0 1 35%" fxFlex.gt-lg="0 1 30%">
+  <mat-label>Pesquisar por usuário</mat-label>
+
+  <input matInput placeholder="Ex.: usuário" [(ngModel)]="filters.name" (keyup.enter)="filter()" />
+
+  <button mat-icon-button matPrefix (click)="filter()">
+    <mat-icon matPrefix> search </mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    matSuffix
+    [matMenuTriggerFor]="filterMenu"
+    #filterMenuTrigger="matMenuTrigger"
+  >
+    <mat-icon>tune</mat-icon>
+  </button>
+</mat-form-field>
+
+<mat-menu
+  class="filter-menu"
+  backdropClass="filter-menu-backdrop"
+  #filterMenu="matMenu"
+  [hasBackdrop]="true"
+  xPosition="before"
+>
+  <div
+    class="p-16"
+    fxLayout="column"
+    (click)="$event.stopPropagation()"
+    (keydown)="$event.stopPropagation()"
+  >
+    <mat-form-field>
+      <mat-label>Pesquisa de texto completo</mat-label>
+      <input
+        matInput
+        placeholder="Ex.: soft"
+        [(ngModel)]="filters.q"
+        [disabled]="hasSomeSecondaryFilterFilled()"
+        (keyup.enter)="filter()"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Nome do usuário</mat-label>
+      <input
+        matInput
+        placeholder="Ex.: usuario"
+        [(ngModel)]="filters.name"
+        [disabled]="!!filters.q"
+        (keyup.enter)="filter()"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Título</mat-label>
+      <input
+        matInput
+        placeholder="Ex.: Research"
+        [(ngModel)]="filters.title"
+        [disabled]="!!filters.q"
+        (keyup.enter)="filter()"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Valor</mat-label>
+      <input
+        matInput
+        currencyMask
+        placeholder="Ex.: R$ 700,00"
+        [(ngModel)]="filters.value"
+        [disabled]="!!filters.q"
+        (keyup.enter)="filter()"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Date</mat-label>
+      <input matInput [matDatepicker]="dp3" [(ngModel)]="filters.date" disabled />
+      <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+      <mat-datepicker #dp3 [disabled]="!!filters.q"></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Pago</mat-label>
+      <mat-select [(value)]="filters.isPaid" [disabled]="!!filters.q">
+        <mat-option value="">(Vazio)</mat-option>
+        <mat-option [value]="true">Pago</mat-option>
+        <mat-option [value]="false">Não pago</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <footer class="mt-8" fxLayout fxLayoutAlign="flex-end center" fxLayoutGap="16px">
+      <button type="button" mat-raised-button (click)="clearFilters(true)">Limpar filtros</button>
+      <button type="button" mat-raised-button color="primary" (click)="filter()">Pesquisar</button>
+    </footer>
+  </div>
+</mat-menu>

@@ -1,0 +1,180 @@
+<section fxLayout="column" fxLayoutGap="16px">
+  <div fxLayout fxLayoutAlign="end center">
+    <button
+      type="submit"
+      mat-raised-button
+      color="primary"
+      [class.spinner]="isLoadingPaymentCreate"
+      [disabled]="isLoadingPaymentCreate"
+      (click)="openPaymentCreateUpdateDialog()"
+    >
+      ADICIONAR PAGAMENTO
+    </button>
+  </div>
+  <div class="table-wrapper mat-elevation-z3" fxLayout="column">
+    <div class="mt-16 px-16" fxLayout fxLayoutAlign="start center">
+      <app-search-filter #searchFilter (filtersChanged)="retrievePayments()"></app-search-filter>
+    </div>
+
+    <app-paginator
+      #paginator
+      [length]="paymentsLength"
+      (pageChange)="retrievePayments()"
+    ></app-paginator>
+
+    <ng-container *ngIf="isLoadingPayments">
+      <div class="my-16" fxLayout fxLayoutAlign="center center">
+        <mat-progress-spinner color="primary" mode="indeterminate" [diameter]="50">
+        </mat-progress-spinner>
+      </div>
+    </ng-container>
+
+    <div class="table-container" [style.visibility]="isLoadingPayments ? 'hidden' : 'visible'">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        matSortActive="name"
+        matSortDisableClear
+        matSortDirection="desc"
+        data-test="payments-table"
+      >
+        <!-- Image Column -->
+        <ng-container matColumnDef="image">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            disableClear
+            fxHide
+            fxShow.gt-sm
+          ></th>
+          <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+            <div fxLayout fxLayoutAlign="center center">
+              <app-image-loader [src]="row.image"></app-image-loader>
+              <span *ngIf="!row.image">&#8212;</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- User Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Usuário</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="user-container" fxLayout="column" fxLayoutAlign="start">
+              <span>{{ row.name | empty }}</span>
+              <span *ngIf="row.username">&commat;{{ row.username }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Title Column -->
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxHide fxShow.gt-xs>
+            Título
+          </th>
+          <td mat-cell *matCellDef="let row" fxHide fxShow.gt-xs>
+            {{ row.title | empty }}
+          </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="date">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxHide fxShow.gt-sm>
+            Data
+          </th>
+          <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+            <div class="date-container" fxLayout="column" fxLayoutAlign="start">
+              <span>{{ row.date | date: 'dd/MM/yyyy' | empty }}</span>
+              <span *ngIf="row.date">{{ row.date | date: 'h:mm a' }}</span>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Value Column -->
+        <ng-container matColumnDef="value">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear fxHide fxShow.gt-sm>
+            Valor
+          </th>
+          <td mat-cell *matCellDef="let row" fxHide fxShow.gt-sm>
+            {{ row.value | currency | empty }}
+          </td>
+        </ng-container>
+
+        <!-- IsPayed Column -->
+        <ng-container matColumnDef="isPayed">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Pago</th>
+          <td mat-cell *matCellDef="let row">
+            <ng-container *ngIf="isLoadingPaymentUpdateStatus[row.id]; else IsPaidTemplate">
+              <mat-progress-spinner
+                color="primary"
+                mode="indeterminate"
+                [diameter]="20"
+              ></mat-progress-spinner>
+            </ng-container>
+            <ng-template #IsPaidTemplate>
+              <mat-checkbox
+                color="primary"
+                [(ngModel)]="row.isPayed"
+                (click)="updatePaymentStatus(row.id, row.isPayed)"
+              ></mat-checkbox>
+            </ng-template>
+          </td>
+        </ng-container>
+
+        <!-- Actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <div class="actions-container" fxLayout fxLayoutAlign="end">
+              <ng-container
+                *ngIf="isLoadingPaymentUpdate[row.id]; else PaymentUpdateButtonTemplate"
+              >
+                <div fxLayout fxLayoutAlign="center center">
+                  <mat-progress-spinner
+                    color="primary"
+                    mode="indeterminate"
+                    [diameter]="20"
+                  ></mat-progress-spinner>
+                </div>
+              </ng-container>
+              <ng-template #PaymentUpdateButtonTemplate>
+                <button
+                  mat-icon-button
+                  aria-label="Payment edit button"
+                  (click)="openPaymentCreateUpdateDialog(row)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </ng-template>
+
+              <ng-container
+                *ngIf="isLoadingPaymentDelete[row.id]; else PaymentDeleteButtonTemplate"
+              >
+                <div fxLayout fxLayoutAlign="center center">
+                  <mat-progress-spinner
+                    color="warn"
+                    mode="indeterminate"
+                    [diameter]="20"
+                  ></mat-progress-spinner>
+                </div>
+              </ng-container>
+              <ng-template #PaymentDeleteButtonTemplate>
+                <button
+                  mat-icon-button
+                  aria-label="Payment remove button"
+                  (click)="openPaymentDeleteDialog(row.id, row)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </ng-template>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </div>
+</section>

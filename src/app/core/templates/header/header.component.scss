@@ -1,0 +1,43 @@
+@import '~src/scss/abstracts/colors';
+
+.header {
+  background-color: $accent-color;
+  padding: 0 16px;
+  height: 70px;
+
+  .mat-icon {
+    color: #c9ced6;
+  }
+
+  .user-data-container {
+    line-height: 1.3;
+
+    .user-name {
+      font-size: 14px;
+      color: $white;
+    }
+
+    .user-profile {
+      color: #a6acbe;
+      font-size: 12px;
+    }
+  }
+
+  .profile-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 25px;
+    }
+  }
+}
+
+button.mat-menu-item {
+  &:last-child {
+    border-top: 1px solid $light-grey;
+  }
+}

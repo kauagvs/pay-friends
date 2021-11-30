@@ -1,0 +1,70 @@
+<div fxLayout fxFlexFill>
+  <section
+    fxFlex
+    fxFlex.gt-xs="50%"
+    fxFlex.gt-sm="40%"
+    fxLayout="row"
+    fxLayoutAlign="center center"
+  >
+    <div fxLayout="column" fxFlex="90%" fxFlex.gt-xs="70%" fxLayoutGap="16px">
+      <img width="27%" src="assets/img/logo-dark.svg" />
+
+      <h1>Bem-vindo de volta</h1>
+
+      <form novalidate fxLayout="column" [formGroup]="loginForm" (ngSubmit)="login()">
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            placeholder="payfriends@email.com"
+            formControlName="email"
+            data-test="login-form-email-input"
+            required
+          />
+          <mat-error *ngIf="displayMessage.email">
+            <p [innerHtml]="displayMessage.email"></p>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            matInput
+            placeholder="123"
+            formControlName="password"
+            data-test="login-form-password-input"
+            required
+          />
+          <mat-icon matSuffix (click)="showPassword = !showPassword">{{
+            showPassword ? 'visibility' : 'visibility_off'
+          }}</mat-icon>
+          <mat-error *ngIf="displayMessage.password">
+            <p [innerHtml]="displayMessage.password"></p>
+          </mat-error>
+        </mat-form-field>
+
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [class.spinner]="loading"
+          [disabled]="!loginForm.valid || loading"
+          data-test="login-button"
+        >
+          Entrar
+        </button>
+      </form>
+    </div>
+  </section>
+  <div
+    fxLayout
+    fxLayoutAlign="center center"
+    fxFlex.gt-xs="50%"
+    fxFlex.gt-sm="60%"
+    fxHide
+    fxShow.gt-xs
+  >
+    <img width="55%" src="assets/img/bg-login.svg" />
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div
+  *ngIf="pages?.length"
+  fxLayout="row wrap"
+  fxLayout.gt-sm
+  fxLayoutAlign="end center"
+  fxLayoutGap="16px"
+>
+  <div fxLayoutAlign="center center" fxLayoutGap="16px">
+    <span class="description">Itens por página:</span>
+    <mat-form-field class="page-size-options-select" fxFlex="0 1 70px">
+      <mat-select [(value)]="pageSize" (selectionChange)="pageSizeChange()">
+        <mat-option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <span class="description">Página {{ page }} de {{ totalPages }}</span>
+  </div>
+
+  <ul class="paginator" fxLayout="row wrap" fxLayout.gt-sm fxLayoutAlign="center center">
+    <li *ngIf="showFirstLastButtons">
+      <button mat-button mat-icon-button (click)="setPage(1)" [disabled]="page === 1">
+        <mat-icon> first_page </mat-icon>
+      </button>
+    </li>
+
+    <li>
+      <button mat-button mat-icon-button (click)="previousPage()" [disabled]="page === 1">
+        <mat-icon> chevron_left </mat-icon>
+      </button>
+    </li>
+
+    <li *ngFor="let pageItem of pages" [ngClass]="{ active: pageItem === page }" class="page-item">
+      <button
+        *ngIf="pageItem !== 0"
+        mat-button
+        mat-icon-button
+        (click)="pageItem !== 0 && setPage(pageItem)"
+      >
+        <span>{{ pageItem }}</span>
+      </button>
+      <span class="mx-8 no-page-item" fxFlexAlign="end" *ngIf="pageItem === 0"
+        >&bull;&bull;&bull;</span
+      >
+    </li>
+
+    <li>
+      <button mat-button mat-icon-button (click)="nextPage()" [disabled]="page === totalPages">
+        <mat-icon> chevron_right </mat-icon>
+      </button>
+    </li>
+
+    <li *ngIf="showFirstLastButtons">
+      <button
+        mat-button
+        mat-icon-button
+        (click)="setPage(totalPages)"
+        [disabled]="page === totalPages"
+      >
+        <mat-icon> last_page </mat-icon>
+      </button>
+    </li>
+  </ul>
+</div>

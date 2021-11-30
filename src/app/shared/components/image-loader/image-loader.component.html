@@ -1,0 +1,26 @@
+<div [id]="id" *ngIf="src">
+  <ng-container *ngIf="loadingImage; else ImageTemplate">
+    <mat-progress-spinner
+      color="primary"
+      mode="indeterminate"
+      [diameter]="20"
+    ></mat-progress-spinner>
+  </ng-container>
+
+  <ng-template #ImageTemplate>
+    <ng-container *ngIf="loadedImage">
+      <img [width]="width" height="auto" [src]="src" alt="Image payment" />
+    </ng-container>
+    <ng-container *ngIf="hasImageLoadingError">
+      <button
+        mat-button
+        mat-icon-button
+        aria-label="Image reload button"
+        (click)="reloadImage()"
+        color="primary"
+      >
+        <mat-icon>refresh</mat-icon>
+      </button>
+    </ng-container>
+  </ng-template>
+</div>

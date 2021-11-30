@@ -1,0 +1,43 @@
+<mat-toolbar class="header mat-elevation-z3" fxLayoutAlign="space-between center">
+  <img
+    class="pointer"
+    width="100"
+    src="assets/img/logo-light.svg"
+    alt="Logo image"
+    routerLink="home"
+  />
+  <div fxLayout fxLayoutAlign="center center" fxLayoutGap="16px">
+    <div class="profile-container" fxLayout fxLayoutAlign="center center" fxLayoutGap="16px">
+      <div
+        class="user-data-container"
+        fxLayout="column"
+        fxLayoutAlign="center center"
+        fxHide
+        fxShow.gt-xs
+      >
+        <span class="user-name" data-test="user-name">{{ user.name }}</span>
+        <span class="user-profile" fxFlexAlign="end">Admin</span>
+      </div>
+      <div class="profile-image">
+        <img
+          class="pointer"
+          src="assets/img/user.png"
+          alt="User photo"
+          data-test="profile-image"
+          [matMenuTriggerFor]="profileMenu"
+        />
+      </div>
+    </div>
+  </div>
+  <mat-menu #profileMenu="matMenu" xPosition="before">
+    <button
+      mat-menu-item
+      *ngFor="let item of menuItems"
+      [routerLink]="item.route"
+      (click)="item.label === 'Sair' ? logout() : ''"
+    >
+      <mat-icon class="font-size-16 icon-{{ item.icon }}">{{ item.icon }}</mat-icon>
+      <span class="font-size-10">{{ item.label }}</span>
+    </button>
+  </mat-menu>
+</mat-toolbar>
